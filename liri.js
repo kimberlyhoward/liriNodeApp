@@ -3,15 +3,15 @@ var fs = require("fs");
 // var inquirer = require("inquirer");
 
 //get spotify, twitter and request. 
-var Spotify = require("spotify");
-var twitter = require("twitter");
+var spotify = require('spotify');
+var Twitter = require("twitter");
 var request = require("request");
 
 // link for security keys file.
 var keys = require("./keys.js");
 
 // make a new spotify or twitter.
-var spotify = new Spotify(keys.spotify);
+// var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
 
 // Define commands
@@ -48,5 +48,5 @@ console.log ("twitter");
 };
 
 
-runSwitch();
+runSwitch(command);
 console.log (command);
