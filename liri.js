@@ -85,7 +85,7 @@ console.log(trackInfo.name);
 console.log(trackInfo.preview_url);
 
     // The album that the song is from
-console.log(trackInfo.album.name);
+// console.log(trackInfo.album.name);
 });
 }
 
