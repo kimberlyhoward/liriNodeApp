@@ -19,6 +19,7 @@ var client = new Twitter(keys.twitter);
 
 var command = process.argv[2];
 var search = process.argv[3];
+var song = process.argv[4];
 
 // run function
 
@@ -26,15 +27,18 @@ function runSwitch(command, search) {
 
     switch (command) {
         case "my-tweets":
+
+            console.log("Tweets");
+
             myTweets();
             break;
 
         case "spotify-this-song":
-            spotifySong();
+            spotifySong(search);
             break;
 
         case "movie-this":
-            movieThis();
+            movieThis(search);
             break;
 
         case "do-what-it-says":
@@ -58,43 +62,27 @@ function myTweets() {
 };
 
 
-//Get Spotify
-function spotifySong(songTrack) {
-    client.get( )
-}
-//Spotify functionality
+// //Get Spotify
+var Spotify = require('node-spotify-api');
 
-var spotSearch = new Spotify({
-    id: config.SPOTIFY_ID
-    , secret: config.SPOTIFY_SECRET
+function spotifySong(song)
+{
+
+spotify.search({ type: 'track', query: song }, function (err, data) {
+    if (err) {
+        return console.log('Error occurred: ' + err);
+    }
+    // console.log(data);
+    var songs = data.tracks.items;
+    console.log(songs);
+
+    console.log('Artists Name: ' + data.tracks.items[0].artists[0].name);
+
 });
-
-var findName = function (artist) {
-    return artist.name;
-}
-//function to run spotify call. 
-var rogueSpotify = function (songName) {
-    spotSearch.search({ type: "track", query: songName }
-        , function (err, data) {
-            if (err) {
-                console.log("error occurred: " + err);
-                return;
-            }
-            var songs = data.tracks.items;
-            for (i = 0; i < songs.length; i++) {
-                console.log(i);
-                console.log("Artist(s): " + songs[i].artists.map(
-                    findName));
-                console.log("Song Name: " + songs[i].name);
-                console.log("Release Date: " + songs[i].album.release_date);
-                console.log("album: " + songs[i].album.name);
-                console.log("---------------------------------------------------------");
-            }
-        });
 }
 
-//OMDB call for Movie.
-var rogueMovie = function (movieName) {
+// //OMDB call for Movie.
+var movieThis = function (movieName) {
     request('http://www.omdbapi.com/?apikey=7e5a37b3&t=' + movieName + "&y=&plot=short&r=json", function (error, response, body) {
         if (!error && response.statusCode === 200) {
             var movieData = JSON.parse(body);
@@ -106,29 +94,4 @@ var rogueMovie = function (movieName) {
         }
     });
 }
-//switch case to take in user inputs. 
-var userReq = function (caseData, functionData) {
-    switch (caseData) {
-        case "my-tweets":
-            rogueTweets();
-            break;
-        case "spotify-this-song":
-            rogueSpotify(functionData);
-            break;
-        case "movie-this":
-            rogueMovie(functionData);
-        case "do-what-it-says":
-            rogueMyBidding();
-            break;
-        default:
-            console.log("LIRI don't know nothin bout dat!");
-    }
-}
-
-var runUserReq = function (uIOne, uITwo) {
-    userReq(uIOne, uITwo);
-};
-
-runUserReq(process.argv[2], process.argv[3]);
-
-
+    runSwitch(command, search);
