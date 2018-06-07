@@ -72,12 +72,20 @@ spotify.search({ type: 'track', query: song }, function (err, data) {
     if (err) {
         return console.log('Error occurred: ' + err);
     }
-    // console.log(data);
-    var songs = data.tracks.items;
-    console.log(songs);
+    var trackInfo = data.tracks.items[0]
 
-    console.log('Artists Name: ' + data.tracks.items[0].artists[0].name);
+    // Artist(s)
+    for (var i = 0; i < trackInfo.artists.length; i++) {            
+    console.log(trackInfo.artists[i].name);
+}
+// The song's name
+console.log(trackInfo.name);
 
+// A preview link of the song from Spotify
+console.log(trackInfo.preview_url);
+
+    // The album that the song is from
+console.log(trackInfo.album.name);
 });
 }
 
